@@ -1,5 +1,7 @@
 '''
 UCI heart disease dataset
+
+Detect 4 disease criticality levels (dataset label column "num")
 '''
 import numpy as np
 import pandas as pd
@@ -12,6 +14,8 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.svm import LinearSVC
 from sklearn.metrics import confusion_matrix
 from sklearn.metrics import precision_score, recall_score
+
+from xgboost import XGBClassifier						# XB
 
 df = pd.read_csv('./heart_disease_uci.csv')
 
@@ -61,7 +65,10 @@ class_weights_map = dict(zip(range(0,len(class_weights)), [float(f) for f in cla
 print('Class weights:', class_weights_map)
 
 # ------- Model --------
-clf = LinearSVC(multi_class='crammer_singer', class_weight=class_weights_map)
+# SVM using class weights 
+#clf = LinearSVC(multi_class='crammer_singer', class_weight=class_weights_map)
+# XGboosting without class weights
+clf = XGBClassifier(n_estimators=1, max_depth=1, learning_rate=1, objective='multi:softmax', num_class=len(np.unique(Y_train)))			# XB
 clf = clf.fit(X_train, Y_train)
 
 # ------- evaluation ----------
