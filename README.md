@@ -9,3 +9,5 @@ Data: [UCI heart disease](https://archive.ics.uci.edu/dataset/45/heart+disease)
 SVM + class weights
 
 XGBoots (no class weights)
+
+![terminal](./docs/uci_heart_disease_terminal.png)
